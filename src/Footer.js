@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import { grey } from "@mui/material/colors";
 
+// provides a footer to the page
 const Footer = () => {
   return (
     <Box
@@ -14,9 +15,6 @@ const Footer = () => {
     >
       Copyright © Your Website 2021
     </Box>
-    // <Box sx={{ bgcolor: "text.primary", color: "background.paper", p: 2 }}>
-    //   text.primary
-    // </Box>
   );
 };
 

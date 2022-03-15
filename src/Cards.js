@@ -9,9 +9,8 @@ import {
 import Card from "@mui/material/Card";
 import { yellow } from "@mui/material/colors";
 import StarIcon from "@mui/icons-material/Star";
-import style from "./Cards.css";
-import { red } from "@mui/material/colors";
 
+// provides card view to the section
 const Cards = (props) => {
   return (
     <Card
