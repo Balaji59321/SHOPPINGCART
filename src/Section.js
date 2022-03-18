@@ -1,8 +1,30 @@
 import Cards from "./Cards";
-import { Box } from "@mui/system";
 import { Grid } from "@mui/material";
+import { useState } from "react";
 
-const Section = () => {
+const Section = (props) => {
+  const [items, setItems] = useState([]);
+
+  const changeHandler = (name) => {
+    setItems((prev) => {
+      if (prev.some((ele) => Object.keys(ele)[0] === name)) {
+        let index = [...prev].findIndex((ele) => Object.keys(ele)[0] === name);
+        let newVal = [...prev];
+        newVal[index][name]++;
+        props.val(newVal);
+        return newVal;
+      } else {
+        let newVal = [...prev];
+        newVal.push({ [name]: 1 });
+        props.val(newVal);
+        console.log(newVal);
+        return newVal;
+      }
+    });
+
+    // console.log(items);
+  };
+
   return (
     <Grid
       container
@@ -18,6 +40,7 @@ const Section = () => {
           name="Fancy Product"
           btnName="View options"
           price="$40.00 - $80.00"
+          click={changeHandler}
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
@@ -25,6 +48,7 @@ const Section = () => {
           name="Special Item"
           btnName="Add to cart"
           price="$20.00 $18.00"
+          click={changeHandler}
           strike
           star
           sale
@@ -35,41 +59,57 @@ const Section = () => {
           name="Sale Item"
           btnName="Add to cart"
           price="$50.00 $25.00"
+          click={changeHandler}
           strike
           sale
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
-        <Cards name="Popular Item" btnName="Add to cart" price="$40.00" star />
+        <Cards
+          name="Popular Item"
+          btnName="Add to cart"
+          price="$40.00"
+          click={changeHandler}
+          star
+        />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
         <Cards
-          name="Sale Item"
+          name="Sale Items"
           btnName="Add to cart"
           price="$50.00 $25.00"
+          click={changeHandler}
           strike
           sale
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
         <Cards
-          name="Fancy Product"
+          name="Fancy Products"
           btnName="View options"
           price="$120.00 - $280.00"
+          click={changeHandler}
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
         <Cards
-          name="Special Item"
+          name="Special Items"
           btnName="Add to cart"
           price="$20.00 $18.00"
+          click={changeHandler}
           strike
           star
           sale
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
-        <Cards name="Popular Item" btnName="Add to cart" price="$40.00" star />
+        <Cards
+          name="Popular Items"
+          btnName="Add to cart"
+          price="$40.00"
+          click={changeHandler}
+          star
+        />
       </Grid>
     </Grid>
   );

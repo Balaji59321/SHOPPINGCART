@@ -116,6 +116,9 @@ const Cards = (props) => {
             color: "text.primary",
             textTransform: "capitalize ",
           }}
+          onClick={() => {
+            props.click(props.name);
+          }}
         >
           {props.btnName}
         </Button>

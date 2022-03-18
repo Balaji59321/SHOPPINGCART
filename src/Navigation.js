@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,12 +13,19 @@ import MenuItem from "@mui/material/MenuItem";
 import { Divider, FormControl } from "@mui/material";
 import { Select } from "@mui/material";
 import { grey } from "@mui/material/colors";
+import Context from "./Context";
+import { DisabledByDefaultRounded } from "@mui/icons-material";
 
 const pages = ["Home", "About"];
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const ctx = useContext(Context);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [val, setVal] = useState("Shop");
+  const [disable, setDisable] = useState(true);
+  useEffect(() => {
+    ctx["items"].length > 0 && setDisable(false);
+  }, [ctx]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -26,6 +33,10 @@ const Navigation = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const cartHandler = () => {
+    props.cart();
   };
 
   return (
@@ -87,10 +98,21 @@ const Navigation = () => {
                   display: "flex",
                   margin: "auto",
                   color: "text.primary",
+                  bgcolor: disable ? grey[400] : grey[200],
+                  cursor: disable ? "not-allowed" : "pointer",
                 }}
                 variant="outlined"
+                onClick={() =>
+                  ctx.items.length > 0
+                    ? cartHandler()
+                    : alert("Add Something to Cart")
+                }
+                // disabled={disable}
               >
-                <IconButton aria-label="cart" sx={{ maxWidth: "100%" }}>
+                <IconButton
+                  aria-label="cart"
+                  sx={{ maxWidth: "100%", cursor: "inherit" }}
+                >
                   {/* <StyledBadge badgeContent={4} color="secondary"> */}
                   <ShoppingCartIcon />
                   {/* </StyledBadge> */}
@@ -101,7 +123,7 @@ const Navigation = () => {
                   px={1}
                   sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
                 >
-                  4
+                  {ctx["items"].length}
                 </Box>
               </Button>
             </Menu>
@@ -138,7 +160,6 @@ const Navigation = () => {
                 sx={{
                   my: 2,
                   display: "block",
-                  color: "text.primary",
                 }}
               >
                 {page}
@@ -162,12 +183,18 @@ const Navigation = () => {
             px={2}
             sx={{
               justifyContent: "flex-end",
-              color: "text.primary",
               display: { xs: "none", md: "flex" },
+              bgcolor: disable ? grey[400] : grey[200],
+              cursor: disable ? "not-allowed" : "pointer",
             }}
             variant="outlined"
+            onClick={() =>
+              ctx.items.length > 0
+                ? cartHandler()
+                : alert("Add Something to Cart")
+            }
           >
-            <IconButton aria-label="cart">
+            <IconButton aria-label="cart" sx={{ cursor: "inherit" }}>
               <ShoppingCartIcon />
             </IconButton>
             <Box sx={{ color: grey[900] }}>Cart</Box>
@@ -176,7 +203,7 @@ const Navigation = () => {
               px={1}
               sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
             >
-              4
+              {ctx["items"].length}
             </Box>
           </Button>
           <Typography
