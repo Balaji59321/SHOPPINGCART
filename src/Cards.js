@@ -5,13 +5,17 @@ import {
   CardActions,
   Typography,
   Box,
+  Rating,
 } from "@mui/material";
 import Card from "@mui/material/Card";
-import { yellow } from "@mui/material/colors";
-import StarIcon from "@mui/icons-material/Star";
+import { useContext, useState } from "react";
+import Context from "./Context";
 
 // provides card view to the section
 const Cards = (props) => {
+  const ctx = useContext(Context);
+  const [rate, setRate] = useState(0);
+  const [btn, setBtn] = useState("Add to Cart");
   return (
     <Card
       sx={{
@@ -68,20 +72,13 @@ const Cards = (props) => {
           {props.name}
         </Typography>
         {props.star ? (
-          <Typography gutterBottom variant="h5" component="div" my={0}>
-            <StarIcon
-              style={{
-                color: yellow[600],
-                fontSize: "large",
-              }}
-            />
-            <StarIcon style={{ color: yellow[600], fontSize: "large" }} />
-            <StarIcon style={{ color: yellow[600], fontSize: "large" }} />
-            <StarIcon style={{ color: yellow[600], fontSize: "large" }} />
-            <StarIcon style={{ color: yellow[600], fontSize: "large" }} />
-          </Typography>
+          <Rating
+            name="no-value"
+            value={rate}
+            onChange={(eve, newVal) => setRate(newVal)}
+          />
         ) : (
-          ""
+          <></>
         )}
         <Typography
           variant="body2"
@@ -116,11 +113,20 @@ const Cards = (props) => {
             color: "text.primary",
             textTransform: "capitalize ",
           }}
-          onClick={() => {
-            props.click(props.name);
+          onClick={(e) => {
+            if (e.target.textContent === "Add to Cart") {
+              props.click("add", props.name);
+              setBtn("Remove from Cart");
+            } else {
+              props.click("remove", props.name);
+              setBtn("Add to Cart");
+            }
           }}
         >
-          {props.btnName}
+          {ctx.items.filter((ele) => Object.keys(ele)[0] === props.name)
+            .length > 0
+            ? "Remove from Cart"
+            : "Add to Cart"}
         </Button>
       </CardActions>
     </Card>

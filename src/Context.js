@@ -1,9 +1,5 @@
 import React from "react";
 
-const Context = React.createContext({
-  items: [],
-  onAddItem: () => {},
-  onRemoveItem: () => {},
-});
+const Context = React.createContext({});
 
 export default Context;

@@ -1,28 +1,40 @@
 import Cards from "./Cards";
 import { Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Section = (props) => {
   const [items, setItems] = useState([]);
+  useEffect(() => {
+    props.val(items);
+  }, [items]);
 
-  const changeHandler = (name) => {
-    setItems((prev) => {
-      if (prev.some((ele) => Object.keys(ele)[0] === name)) {
+  const changeHandler = (type, name) => {
+    if (type === "add") {
+      setItems((prev) => {
+        if (prev.some((ele) => Object.keys(ele)[0] === name)) {
+          let index = [...prev].findIndex(
+            (ele) => Object.keys(ele)[0] === name
+          );
+          let newVal = [...prev];
+          newVal[index][name]++;
+          // props.val(newVal);
+          return newVal;
+        } else {
+          let newVal = [...prev];
+          newVal.push({ [name]: 1 });
+          // props.val(newVal);
+          return newVal;
+        }
+      });
+    } else {
+      setItems((prev) => {
         let index = [...prev].findIndex((ele) => Object.keys(ele)[0] === name);
         let newVal = [...prev];
-        newVal[index][name]++;
-        props.val(newVal);
+        delete newVal[index];
+        newVal.splice(index, 1);
         return newVal;
-      } else {
-        let newVal = [...prev];
-        newVal.push({ [name]: 1 });
-        props.val(newVal);
-        console.log(newVal);
-        return newVal;
-      }
-    });
-
-    // console.log(items);
+      });
+    }
   };
 
   return (
