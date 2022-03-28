@@ -72,11 +72,9 @@ const Cards = (props) => {
           {props.name}
         </Typography>
         {props.star ? (
-          <Rating
-            name="no-value"
-            value={rate}
-            onChange={(eve, newVal) => setRate(newVal)}
-          />
+          <Typography>
+            <Rating value={rate} onChange={(eve, newVal) => setRate(newVal)} />
+          </Typography>
         ) : (
           <></>
         )}
