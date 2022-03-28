@@ -168,7 +168,7 @@ const CartPage = () => {
             <Typography>SGST : {sgst}</Typography>
             <Typography>CGST : {cgst}</Typography>
             <Typography>Total Amount : {total}</Typography>
-            {amount > 1000 && <>Discount : {amount - 50}</>}
+            {amount > 1000 && <>Discount : {total - 50}</>}
           </Box>
 
           <Box
