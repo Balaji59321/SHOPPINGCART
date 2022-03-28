@@ -75,8 +75,6 @@ function App() {
   return (
     <Context.Provider value={cart}>
       <BrowserRouter>
-        <Link to="/">App</Link>
-        <Link to="/cart">Cart</Link>
         <Routes>
           <Route
             path="/"

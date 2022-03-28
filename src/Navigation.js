@@ -94,40 +94,59 @@ const Navigation = (props) => {
                   <MenuItem value={"New Arrivals"}>New Arrivals</MenuItem>
                 </Select>
               </FormControl>
-              <Button
-                px={2}
-                sx={{
-                  display: "flex",
-                  margin: "auto",
-                  color: "text.primary",
-                  bgcolor: disable ? grey[400] : grey[200],
-                  cursor: disable ? "not-allowed" : "pointer",
-                }}
-                variant="outlined"
-                onClick={() =>
-                  ctx.items.length > 0
-                    ? cartHandler()
-                    : alert("Add Something to Cart")
-                }
-                // disabled={disable}
-              >
-                <IconButton
-                  aria-label="cart"
-                  sx={{ maxWidth: "100%", cursor: "inherit" }}
+              <Box sx={{ display: "flex", gap: 2, flexDirection: "column" }}>
+                <Button
+                  sx={{
+                    display: "flex",
+                    color: "text.primary",
+                    bgcolor: disable ? grey[400] : grey[200],
+                    cursor: disable ? "not-allowed" : "pointer",
+                  }}
+                  px={2}
+                  variant="outlined"
                 >
-                  {/* <StyledBadge badgeContent={4} color="secondary"> */}
-                  <ShoppingCartIcon />
-                  {/* </StyledBadge> */}
-                </IconButton>
-                <Box sx={{ color: grey[900] }}>Cart</Box>
-                <Box
-                  ml={1}
-                  px={1}
-                  sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
+                  <Link
+                    to="/cart"
+                    style={{ textDecoration: "none", color: "#111" }}
+                  >
+                    Go to Cart
+                  </Link>
+                </Button>
+                <Button
+                  px={2}
+                  sx={{
+                    display: "flex",
+                    margin: "auto",
+                    color: "text.primary",
+                    bgcolor: disable ? grey[400] : grey[200],
+                    cursor: disable ? "not-allowed" : "pointer",
+                  }}
+                  variant="outlined"
+                  onClick={() =>
+                    ctx.items.length > 0
+                      ? cartHandler()
+                      : alert("Add Something to Cart")
+                  }
+                  // disabled={disable}
                 >
-                  {ctx["items"].length}
-                </Box>
-              </Button>
+                  <IconButton
+                    aria-label="cart"
+                    sx={{ maxWidth: "100%", cursor: "inherit" }}
+                  >
+                    {/* <StyledBadge badgeContent={4} color="secondary"> */}
+                    <ShoppingCartIcon />
+                    {/* </StyledBadge> */}
+                  </IconButton>
+                  <Box sx={{ color: grey[900] }}>Cart</Box>
+                  <Box
+                    ml={1}
+                    px={1}
+                    sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
+                  >
+                    {ctx["items"].length}
+                  </Box>
+                </Button>
+              </Box>
             </Menu>
             <IconButton
               size="large"
@@ -188,33 +207,52 @@ const Navigation = (props) => {
               <Route path="/cart" element={<Cart />}></Route>
             </Routes>
           </BrowserRouter> */}
-          <Button
-            px={2}
-            sx={{
-              justifyContent: "flex-end",
-              display: { xs: "none", md: "flex" },
-              bgcolor: disable ? grey[400] : grey[200],
-              cursor: disable ? "not-allowed" : "pointer",
-            }}
-            variant="outlined"
-            onClick={() =>
-              ctx.items.length > 0
-                ? cartHandler()
-                : alert("Add Something to Cart")
-            }
-          >
-            <IconButton aria-label="cart" sx={{ cursor: "inherit" }}>
-              <ShoppingCartIcon />
-            </IconButton>
-            <Box sx={{ color: grey[900] }}>Cart</Box>
-            <Box
-              ml={1}
-              px={1}
-              sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button
+              sx={{
+                justifyContent: "flex-end",
+                display: { xs: "none", md: "flex" },
+                bgcolor: disable ? grey[400] : grey[200],
+                cursor: disable ? "not-allowed" : "pointer",
+              }}
+              px={2}
+              variant="outlined"
             >
-              {ctx["items"].length}
-            </Box>
-          </Button>
+              <Link
+                to="/cart"
+                style={{ textDecoration: "none", color: "#111" }}
+              >
+                Go to Cart
+              </Link>
+            </Button>
+            <Button
+              px={2}
+              sx={{
+                justifyContent: "flex-end",
+                display: { xs: "none", md: "flex" },
+                bgcolor: disable ? grey[400] : grey[200],
+                cursor: disable ? "not-allowed" : "pointer",
+              }}
+              variant="outlined"
+              onClick={() =>
+                ctx.items.length > 0
+                  ? cartHandler()
+                  : alert("Add Something to Cart")
+              }
+            >
+              <IconButton aria-label="cart" sx={{ cursor: "inherit" }}>
+                <ShoppingCartIcon />
+              </IconButton>
+              <Box sx={{ color: grey[900] }}>View Cart</Box>
+              <Box
+                ml={1}
+                px={1}
+                sx={{ bgcolor: grey[900], borderRadius: 5, color: "white" }}
+              >
+                {ctx["items"].length}
+              </Box>
+            </Button>
+          </Box>
           <Typography
             variant="h6"
             noWrap

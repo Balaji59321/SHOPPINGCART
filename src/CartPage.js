@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Context from "./Context";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Divider, Typography } from "@mui/material";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
   const ctx = React.useContext(Context);
@@ -24,19 +25,47 @@ const CartPage = () => {
     setTotal(Math.round(amount + sgst + cgst));
   }, [amount, sgst, cgst]);
 
-  console.log(ctx);
-
   return (
     <Box>
-      <Typography variant="h6" textAlign={"center"} sx={{ fontWeight: 900 }}>
-        My Cart
-      </Typography>
-      <Typography
-        variant="p"
-        sx={{ display: "flex", justifyContent: "center" }}
+      <Link
+        to="/"
+        style={{
+          textDecoration: "none",
+          display: "flex",
+          justifyContent: "flex-end",
+          margin: "20px",
+        }}
       >
-        Additional Discount of 5% for all purchases above 1000
-      </Typography>
+        <span
+          style={{
+            border: "1px solid black",
+            padding: 10,
+            fontSize: "1rem",
+            borderRadius: "3px",
+          }}
+        >
+          Home
+        </span>
+      </Link>
+      <Box sx={{ backgroundColor: "#ccc" }} py={3}>
+        <Typography variant="h6" textAlign={"center"} sx={{ fontWeight: 800 }}>
+          My Cart
+        </Typography>
+        <Typography
+          variant="p"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            color: "red",
+            fontWeight: 800,
+            textAlign: "center",
+          }}
+          mt={2}
+          px={2}
+        >
+          *Additional Discount of 5% for all purchases above 1000
+        </Typography>
+      </Box>
       {ctx.items.length > 0 ? (
         <>
           {ctx.items.map(
@@ -125,7 +154,16 @@ const CartPage = () => {
               textAlign: "center",
             }}
             px={{ sm: 20 }}
+            mx={3}
           >
+            <Divider
+              style={{
+                padding: "50px 10px 10px 10px",
+                fontWeight: 800,
+              }}
+            >
+              Invoice Details
+            </Divider>
             <Typography>Amount : {amount}</Typography>
             <Typography>SGST : {sgst}</Typography>
             <Typography>CGST : {cgst}</Typography>
@@ -135,7 +173,8 @@ const CartPage = () => {
 
           <Box
             sx={{ display: "flex", justifyContent: "space-evenly" }}
-            px={{ sm: 20 }}
+            px={{ sm: 60 }}
+            my={3}
           >
             <Button variant="outlined" onClick={() => alert("Ordering Now")}>
               Order Now
@@ -146,7 +185,9 @@ const CartPage = () => {
           </Box>
         </>
       ) : (
-        <Box sx={{ textAlign: "center" }}>No Items Found </Box>
+        <Box sx={{ textAlign: "center" }} mt={3}>
+          No Items Found{" "}
+        </Box>
       )}
     </Box>
   );
