@@ -2,8 +2,11 @@ import Box from "@mui/material/Box";
 import { useContext } from "react";
 import Context from "./Context";
 import ReactDOM from "react-dom";
+import styles from "./Cart.module.css";
+import { Button } from "@mui/material";
 const Cart = (props) => {
   const ctx = useContext(Context);
+  console.log("cart page", ctx);
 
   const BackDrop = () => {
     return (
@@ -41,57 +44,67 @@ const Cart = (props) => {
           backgroundColor: "rgb(241, 162, 162)",
           textAlign: "center",
           overflow: "auto",
-          height: "50%",
+          height: "70%",
         }}
         my={"auto"}
       >
-        <Box component="h1" sx={{ backgroundColor: "#111", color: "#fff" }}>
+        <Box
+          component="h1"
+          sx={{ backgroundColor: "#111", color: "#fff" }}
+          py={1}
+          mx={2}
+        >
           Items in Cart
         </Box>
-        {/* {ctx.items.map((ele, ind) => console.log(ele, Object.keys(ele)[0]))} */}
-        {ctx.items.map(
-          (ele, ind) =>
-            Object.keys(ele)[0] && (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 7,
-                }}
-              >
-                <h4>{Object.keys(ele)[0]}</h4>
-                {Object.keys(ele)[0] ? (
-                  <>
-                    <button
-                      onClick={() => {
-                        ctx.onRemoveItem(Object.keys(ele)[0]);
-                      }}
-                    >
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      value={Object.values(ctx["items"][ind])}
-                      sx={{
-                        display: "inline-block",
-                        width: "50px !important",
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        ctx.onAddItem(Object.keys(ele)[0]);
-                      }}
-                    >
-                      +
-                    </button>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Box>
-            )
-        )}
+        {ctx.items.length > 0 &&
+          ctx.items.map(
+            (ele, ind) =>
+              Object.keys(ele)[0] && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 7,
+                    backgroundColor: "#ddd",
+                    borderRadius: 3,
+                    boxShadow: "3px 3px 5px",
+                    textAlign: "left",
+                  }}
+                  px={5}
+                  py={2}
+                  mx={5}
+                  my={2}
+                >
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <p className={styles.item}>{ele["name"]}</p>
+                    <span>Amount ($) :{" " + ele.price}</span>
+                  </Box>
+                  {Object.keys(ele)[0] ? (
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                      <button
+                        onClick={() => {
+                          return ctx.onRemoveItem(ele.id, ele.price);
+                        }}
+                      >
+                        -
+                      </button>
+                      <Box px={1}>{ele["quantity"]}</Box>
+                      <button
+                        onClick={() => {
+                          return ctx.onAddItem(ele.id, ele.price);
+                          // console.log("I am execurted");
+                        }}
+                      >
+                        +
+                      </button>
+                    </Box>
+                  ) : (
+                    <></>
+                  )}
+                </Box>
+              )
+          )}
       </Box>
     );
   };

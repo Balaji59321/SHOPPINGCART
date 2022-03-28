@@ -115,16 +115,25 @@ const Cards = (props) => {
           }}
           onClick={(e) => {
             if (e.target.textContent === "Add to Cart") {
-              props.click("add", props.name);
+              props.click(
+                "add",
+                props.name,
+                props.strike ? props.price.split(" ")[1] : props.price,
+                props.id
+              );
               setBtn("Remove from Cart");
             } else {
-              props.click("remove", props.name);
+              props.click(
+                "remove",
+                props.name,
+                props.strike ? props.price.split(" ")[1] : props.price,
+                props.id
+              );
               setBtn("Add to Cart");
             }
           }}
         >
-          {ctx.items.filter((ele) => Object.keys(ele)[0] === props.name)
-            .length > 0
+          {ctx.items.filter((ele) => ele.name === props.name).length > 0
             ? "Remove from Cart"
             : "Add to Cart"}
         </Button>

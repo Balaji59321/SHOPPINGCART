@@ -14,7 +14,9 @@ import { Divider, FormControl } from "@mui/material";
 import { Select } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import Context from "./Context";
-import { DisabledByDefaultRounded } from "@mui/icons-material";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Cart from "./Cart";
+import App from "./App";
 
 const pages = ["Home", "About"];
 
@@ -179,6 +181,13 @@ const Navigation = (props) => {
               </Select>
             </FormControl>
           </Box>
+          {/* <BrowserRouter>
+            <Link to="/cart">Go to Cart</Link>
+            <Routes>
+              <Route path="/" element={<App />}></Route>
+              <Route path="/cart" element={<Cart />}></Route>
+            </Routes>
+          </BrowserRouter> */}
           <Button
             px={2}
             sx={{

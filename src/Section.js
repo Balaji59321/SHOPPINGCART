@@ -1,14 +1,20 @@
 import Cards from "./Cards";
 import { Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import Context from "./Context";
 
 const Section = (props) => {
+  const ctx = useContext(Context);
   const [items, setItems] = useState([]);
-  useEffect(() => {
-    props.val(items);
-  }, [items]);
+  const [amount, setAmount] = useState(0);
+  const [operation, setOperation] = useState("plus");
 
-  const changeHandler = (type, name) => {
+  // useEffect(() => {
+  //   props.val(items, amount, operation);
+  // }, [items, operation]);
+
+  const changeHandler = (type, name, price, id) => {
+    const priceFormatted = Math.round(price.split("$")[1]);
     if (type === "add") {
       setItems((prev) => {
         if (prev.some((ele) => Object.keys(ele)[0] === name)) {
@@ -16,22 +22,37 @@ const Section = (props) => {
             (ele) => Object.keys(ele)[0] === name
           );
           let newVal = [...prev];
-          newVal[index][name]++;
+          newVal[index]["quantity"]++;
+          setAmount(priceFormatted);
+          setOperation("plus");
           // props.val(newVal);
+          // props.val(newVal, priceFormatted, "plus");
           return newVal;
         } else {
           let newVal = [...prev];
-          newVal.push({ [name]: 1 });
+          newVal.push({
+            id: Math.round(Math.random() * Date.now()),
+            name: [name].toString(),
+            quantity: 1,
+            price: Math.round(price.split("$")[1]),
+          });
+          setAmount(priceFormatted);
+          setOperation("plus");
+          props.val(newVal, priceFormatted, "plus");
+          // ctx.increment
           // props.val(newVal);
           return newVal;
         }
       });
     } else {
       setItems((prev) => {
-        let index = [...prev].findIndex((ele) => Object.keys(ele)[0] === name);
+        let index = [...prev].findIndex((ele) => ele.name === name);
         let newVal = [...prev];
         delete newVal[index];
         newVal.splice(index, 1);
+        // setAmount((prev) => +prev - priceFormatted);
+        setOperation("minus");
+        props.val(newVal, priceFormatted, "minus");
         return newVal;
       });
     }
@@ -51,8 +72,10 @@ const Section = (props) => {
         <Cards
           name="Fancy Product"
           btnName="View options"
-          price="$40.00 - $80.00"
+          price="$80.00"
           click={changeHandler}
+          id="card1"
+          key="card1"
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
@@ -61,6 +84,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$20.00 $18.00"
           click={changeHandler}
+          id="card2"
+          key="card2"
           strike
           star
           sale
@@ -72,6 +97,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$50.00 $25.00"
           click={changeHandler}
+          id="card3"
+          key="card3"
           strike
           sale
         />
@@ -82,6 +109,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$40.00"
           click={changeHandler}
+          id="card4"
+          key="card4"
           star
         />
       </Grid>
@@ -91,6 +120,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$50.00 $25.00"
           click={changeHandler}
+          id="card5"
+          key="card5"
           strike
           sale
         />
@@ -99,8 +130,10 @@ const Section = (props) => {
         <Cards
           name="Fancy Products"
           btnName="View options"
-          price="$120.00 - $280.00"
+          price="$280.00"
           click={changeHandler}
+          id="card6"
+          key="card6"
         />
       </Grid>
       <Grid item xs={6} sm={4} md={3}>
@@ -109,6 +142,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$20.00 $18.00"
           click={changeHandler}
+          id="card7"
+          key="card7"
           strike
           star
           sale
@@ -120,6 +155,8 @@ const Section = (props) => {
           btnName="Add to cart"
           price="$40.00"
           click={changeHandler}
+          id="card8"
+          key="card8"
           star
         />
       </Grid>

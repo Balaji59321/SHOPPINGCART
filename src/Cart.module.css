@@ -1,0 +1,12 @@
+.item {
+  margin: 0;
+  font-weight: bolder;
+}
+
+span {
+  font-size: 12px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
